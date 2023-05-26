@@ -1,9 +1,19 @@
 .glow {
     width: 50rem;
     height: 50rem;
-    background: radial-gradient(31.43% 31.43% at 33.32% 55.26%, rgba(13, 13, 14, 0.79) 33.11%, rgba(22, 47, 137, 0.81) 100%, rgba(22, 47, 137, 0.81) 100%);
+    background: radial-gradient(31.43% 31.43% at 33.32% 55.26%, rgba(38, 38, 94, 0.42) 33.11%, rgba(22, 47, 137, 0.29) 100%, rgba(21, 34, 81, 0.81) 100%);
     filter: blur(100px);
     border-radius: 50%;
     position: absolute;
     z-index: 0;
+}
+
+
+.glowMuch {
+    position: absolute;
+    width: 150rem;
+    height: 150rem;
+    background: radial-gradient(31.43% 0% at 50% 55.26%, rgba(19, 38, 102, 0) 33.11%, rgba(28, 44, 102, 0.14) 100%);
+    filter: blur(100px);
+    border-radius: 50%;
 }
