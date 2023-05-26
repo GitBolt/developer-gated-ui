@@ -5,8 +5,11 @@ import { Navbar } from '@/components/Navbar'
 import { Box, Grid, Text, Flex, Button } from '@chakra-ui/react'
 import commonStyles from '@/styles/Common.module.css'
 import { ChevronRightIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
 
 export default function Home() {
+
+  const router = useRouter()
   return (
     <>
 
@@ -45,14 +48,15 @@ export default function Home() {
         <Box zIndex={2} pos="absolute" top="40rem" w="100%">
           <img src="/line.svg" alt="Line" width="100%" height="100%" />
         </Box>
-        <Box zIndex={2}  pos="absolute" top="42rem" w="100%">
+        <Box zIndex={2} pos="absolute" top="42rem" w="100%">
           <img src="/line.svg" alt="Line" width="100%" height="100%" />
         </Box>
-        <Box zIndex={2}  pos="absolute" top="44rem" w="100%">
+        <Box zIndex={2} pos="absolute" top="44rem" w="100%">
           <img src="/line.svg" alt="Line" width="100%" height="100%" />
         </Box>
 
         <Button
+          onClick={() => router.push('/start')}
           bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
           w="40rem"
           h="8rem"
