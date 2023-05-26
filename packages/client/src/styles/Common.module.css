@@ -1,0 +1,9 @@
+.glow {
+    width: 50rem;
+    height: 50rem;
+    background: radial-gradient(31.43% 31.43% at 33.32% 55.26%, rgba(13, 13, 14, 0.79) 33.11%, rgba(22, 47, 137, 0.81) 100%, rgba(22, 47, 137, 0.81) 100%);
+    filter: blur(100px);
+    border-radius: 50%;
+    position: absolute;
+    z-index: 0;
+}

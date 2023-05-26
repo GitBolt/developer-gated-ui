@@ -1,0 +1,17 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^6.6.2"
+  },
+  "scripts": {
+    "dev": "lerna run dev --stream",
+    "build": "lerna run build --stream",
+    "start": "lerna run start --stream",
+    "lint": "lerna run lint --stream",
+    "lint:fix": "lerna run lint --stream -- --fix"
+  }
+}
