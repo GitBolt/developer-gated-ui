@@ -5,9 +5,12 @@ import { Navbar } from '@/components/Navbar'
 import { Grid, Button, Flex, Text, Divider, Box, Icon } from '@chakra-ui/react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import commonStyles from '@/styles/Common.module.css'
-import { IoIosWallet, AiFillGithub } from 'react-icons/all';
+import { IoIosWallet, AiFillGithub, FaFileSignature } from 'react-icons/all';
+import { NextPage } from 'next'
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+require('@solana/wallet-adapter-react-ui/styles.css');
 
-export default function Start() {
+const Start: NextPage = () => {
   const { data: session } = useSession()
   console.log(session)
   return (
@@ -28,14 +31,16 @@ export default function Start() {
           top="-25rem"
           w="70rem"
           h="70rem"
+          bg="radial-gradient(31.43% 31.43% at 33.32% 55.26%, rgba(38, 38, 94, 0.42) 33.11%, rgba(30, 52, 130, 0.29) 100%, rgba(20, 27, 53, 0.5) 100%)"
           filter="brightness(120%) blur(100px)"
           className={commonStyles.glow}
         >
 
         </Box>
         <Flex
+          mb="4rem"
           border="1px solid #27274A"
-          gap="2rem"
+          gap="1.5rem"
           borderRadius="2rem"
           mt="5rem"
           w="65rem"
@@ -48,7 +53,7 @@ export default function Start() {
           bg="linear-gradient(134.22deg, #13131D 51.58%, #1D1D30 111.53%)"
         >
 
-          <Text fontSize="4rem" mt="1rem" fontWeight={600}>
+          <Text fontSize="3rem" mt="1rem" fontWeight={600}>
             Get Started
           </Text>
 
@@ -56,28 +61,57 @@ export default function Start() {
 
           <Text
             color="#7C89FF"
-            fontSize="3.5rem"
+            fontSize="2.4rem"
             fontWeight={700}
             alignSelf="start"
           >Authorize Wallet</Text>
 
-          <Text color="#4B4B67" fontSize="2.8rem">
+          <Text color="#4B4B67" fontSize="2rem">
             Connect wallet is required to verify and register your public key
           </Text>
 
-          <Button
-            h="6.5rem"
-            _focus={{ transform: "scale(0.9)" }}
-            w="35rem"
-            fontSize="3.2rem"
-            fontWeight={600}
-            borderRadius="2rem"
+          <WalletMultiButton
+            style={{
+              height: "4.5rem",
+              width: "25rem",
+              fontWeight: 600,
+              borderRadius: "1.5rem",
+              alignSelf: "start",
+              fontSize: "2.2rem",
+              background: "linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
+            }}
+          >
+            <Icon as={IoIosWallet} transform="translate(-0.5rem, 0)" />
+            Connect Wallet
+          </WalletMultiButton>
+
+
+          <Divider mt="2rem" borderColor="#27274A" />
+
+          <Text
+            color="#7C89FF"
+            fontSize="2.4rem"
+            fontWeight={700}
             alignSelf="start"
-            leftIcon={<Icon as={IoIosWallet} />}
+          >Authorize GitHub</Text>
+
+          <Text color="#4B4B67" fontSize="2rem">
+            GitHub connection is required to check your profile and contributions from our list          </Text>
+
+          <Button
+            h="4.5rem"
+            _focus={{ transform: "scale(0.9)" }}
+            w="25rem"
+            fontSize="2.2rem"
+            fontWeight={600}
+            borderRadius="1.5rem"
+            alignSelf="start"
+            onClick={() => signIn()}
+            leftIcon={<Icon as={AiFillGithub} />}
             _hover={{ bg: 'linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)' }}
             bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
           >
-            Connect Wallet
+            Connect GitHub
           </Button>
 
 
@@ -85,32 +119,36 @@ export default function Start() {
 
           <Text
             color="#7C89FF"
-            fontSize="3.5rem"
+            fontSize="2.4rem"
             fontWeight={700}
             alignSelf="start"
-          >Authorize GitHub</Text>
+          >Sign Message</Text>
 
-          <Text color="#4B4B67" fontSize="2.8rem">
-            GitHub connection is required to check your profile and contributions from our list          </Text>
+          <Text color="#4B4B67" fontSize="2rem">
+            We need to verify a message signature to make sure that the public key is correct
+          </Text>
 
           <Button
-            h="6.5rem"
-            onClick={() => signIn()}
-            w="35rem"
-            fontSize="3.2rem"
-            fontWeight={600}
+            h="4.5rem"
             _focus={{ transform: "scale(0.9)" }}
-            borderRadius="2rem"
+            w="25rem"
+            fontSize="2.2rem"
+            fontWeight={600}
+            borderRadius="1.5rem"
             alignSelf="start"
-            leftIcon={<Icon as={AiFillGithub} />}
+            onClick={() => signIn()}
+            leftIcon={<Icon as={FaFileSignature} />}
             _hover={{ bg: 'linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)' }}
             bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
           >
-            Connect Wallet
+            Sign Message
           </Button>
+
+
         </Flex>
 
       </Grid>
     </>
   )
 }
+export default Start
