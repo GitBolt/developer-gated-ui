@@ -5,14 +5,54 @@ import { Navbar } from '@/components/Navbar'
 import { Grid, Button, Flex, Text, Divider, Box, Icon } from '@chakra-ui/react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import commonStyles from '@/styles/Common.module.css'
-import { IoIosWallet, AiFillGithub, FaFileSignature } from 'react-icons/all';
+import { FaWallet, FaGithub, FaFileSignature, FaCheck } from 'react-icons/fa';
 import { NextPage } from 'next'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { useState } from 'react'
+import base58 from 'bs58'
 require('@solana/wallet-adapter-react-ui/styles.css');
+
+
+export const truncatedPublicKey = (publicKey: string, length?: number) => {
+  if (!publicKey) return;
+  if (!length) {
+    length = 5;
+  }
+  return publicKey.replace(publicKey.slice(length, 44 - length), '...');
+};
 
 const Start: NextPage = () => {
   const { data: session } = useSession()
   console.log(session)
+  const { publicKey, signMessage } = useWallet()
+  const [sig, setSig] = useState<Uint8Array>()
+
+
+  const sendReq = async () => {
+    if (!session || !session.user || !sig) return
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ signature: base58.encode(sig), publicKey, github: session?.user.name })
+    })
+
+    const data = await res.json()
+    console.log(data)
+  }
+
+  const createSignature = async () => {
+    if (!signMessage) return
+    const message = new TextEncoder().encode(`Signing this message for verification: ${+new Date()}`);
+    const signature = await signMessage(message)
+    setSig(signature)
+    await sendReq()
+  }
+
+
+
   return (
     <>
 
@@ -62,6 +102,7 @@ const Start: NextPage = () => {
           <Text
             color="#7C89FF"
             fontSize="2.4rem"
+            opacity={publicKey ? "0.5" : "1"}
             fontWeight={700}
             alignSelf="start"
           >Authorize Wallet</Text>
@@ -70,21 +111,27 @@ const Start: NextPage = () => {
             Connect wallet is required to verify and register your public key
           </Text>
 
-          <WalletMultiButton
-            style={{
-              height: "4.5rem",
-              width: "25rem",
-              fontWeight: 600,
-              borderRadius: "1.5rem",
-              alignSelf: "start",
-              fontSize: "2.2rem",
-              background: "linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
-            }}
-          >
-            <Icon as={IoIosWallet} transform="translate(-0.5rem, 0)" />
-            Connect Wallet
-          </WalletMultiButton>
+          <Flex justify="space-between" align="center" w="100%">
+            <WalletMultiButton
+              style={{
+                height: "4.5rem",
+                opacity: publicKey ? "0.5" : "1",
+                width: "25rem",
+                fontWeight: 600,
+                borderRadius: "1.5rem",
+                alignSelf: "start",
+                fontSize: "2.2rem",
+                background: "linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
+              }}
+            >
+              {publicKey ? null : <Icon as={FaWallet} transform="translate(-0.5rem, 0)" />}
+              {publicKey ? truncatedPublicKey(publicKey.toBase58()) : 'Connect Wallet'}
+            </WalletMultiButton>
 
+            <Box>
+              {publicKey ? <Icon as={FaCheck} color="green" /> : null}
+            </Box>
+          </Flex>
 
           <Divider mt="2rem" borderColor="#27274A" />
 
@@ -93,27 +140,37 @@ const Start: NextPage = () => {
             fontSize="2.4rem"
             fontWeight={700}
             alignSelf="start"
+            opacity={session && session.user ? "0.5" : "1"}
           >Authorize GitHub</Text>
 
           <Text color="#4B4B67" fontSize="2rem">
-            GitHub connection is required to check your profile and contributions from our list          </Text>
+            GitHub connection is required to check your profile and contributions from our list
+          </Text>
 
-          <Button
-            h="4.5rem"
-            _focus={{ transform: "scale(0.9)" }}
-            w="25rem"
-            fontSize="2.2rem"
-            fontWeight={600}
-            borderRadius="1.5rem"
-            alignSelf="start"
-            onClick={() => signIn()}
-            leftIcon={<Icon as={AiFillGithub} />}
-            _hover={{ bg: 'linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)' }}
-            bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
-          >
-            Connect GitHub
-          </Button>
 
+          <Flex justify="space-between" align="center" w="100%">
+
+            <Button
+              h="4.5rem"
+              _focus={{ transform: "scale(0.9)" }}
+              w="25rem"
+              fontSize="2.2rem"
+              opacity={session && session.user ? "0.5" : "1"}
+              fontWeight={600}
+              borderRadius="1.5rem"
+              alignSelf="start"
+              onClick={() => signIn()}
+              leftIcon={<Icon as={FaGithub} />}
+              _hover={{ bg: 'linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)' }}
+              bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
+            >
+              Connect GitHub
+            </Button>
+
+            <Box>
+              {session && session.user ? <Icon as={FaCheck} color="green" /> : null}
+            </Box>
+          </Flex>
 
           <Divider mt="2rem" borderColor="#27274A" />
 
@@ -133,10 +190,11 @@ const Start: NextPage = () => {
             _focus={{ transform: "scale(0.9)" }}
             w="25rem"
             fontSize="2.2rem"
+            disabled={!publicKey || !session || !session.user}
             fontWeight={600}
             borderRadius="1.5rem"
             alignSelf="start"
-            onClick={() => signIn()}
+            onClick={createSignature}
             leftIcon={<Icon as={FaFileSignature} />}
             _hover={{ bg: 'linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)' }}
             bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
