@@ -2,13 +2,10 @@
 
 import { DefaultHead } from '@/components/DefaultHead'
 import { Navbar } from '@/components/Navbar'
-import { Grid, Button, Flex, Text, Divider, Box, Icon } from '@chakra-ui/react'
+import { Grid, Flex, Text, Box } from '@chakra-ui/react'
 import commonStyles from '@/styles/Common.module.css'
 import { NextPage } from 'next'
 import { getSession } from 'next-auth/react'
-require('@solana/wallet-adapter-react-ui/styles.css');
-
-
 
 const Error: NextPage = () => {
 

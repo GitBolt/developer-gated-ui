@@ -27,9 +27,10 @@ morganBody(app, {
   logResponseBody: false,
 });
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
   return res.send('gm');
 });
+
 app.post('/verify', verifyUser);
 
 

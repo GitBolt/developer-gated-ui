@@ -2,17 +2,11 @@
 
 import { DefaultHead } from '@/components/DefaultHead'
 import { Navbar } from '@/components/Navbar'
-import { Grid, Button, Flex, Text, Divider, Box, Icon } from '@chakra-ui/react'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { Grid, Flex, Text, Box } from '@chakra-ui/react'
 import commonStyles from '@/styles/Common.module.css'
-import { FaWallet, FaGithub, FaFileSignature, FaCheck } from 'react-icons/fa';
 import { NextPage } from 'next'
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
-import { useWallet } from '@solana/wallet-adapter-react'
-import { useState } from 'react'
-import base58 from 'bs58'
+import { getSession } from 'next-auth/react'
 import { CheckIcon } from '@chakra-ui/icons'
-require('@solana/wallet-adapter-react-ui/styles.css');
 
 
 
@@ -56,4 +50,23 @@ const Success: NextPage = () => {
     </>
   )
 }
+
+
+export const getServerSideProps = async (context: any) => {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/'
+      }
+    }
+  }
+  return {
+    props: {
+      session
+    }
+  }
+}
+
 export default Success

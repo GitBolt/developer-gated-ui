@@ -144,7 +144,7 @@ const Start: NextPage = () => {
               fontWeight={600}
               borderRadius="1.5rem"
               alignSelf="start"
-              onClick={() => signIn()}
+              onClick={() => session && session.user ? signOut() : signIn()}
               leftIcon={<Icon as={FaGithub} />}
               _hover={{ bg: 'linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)' }}
               bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
