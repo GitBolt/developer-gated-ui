@@ -32,9 +32,6 @@ app.get('/', (req: Request, res: Response) => {
 });
 app.post('/verify', verifyUser);
 
-// app.post('/upload', uploadGithubUsername);
-
 app.listen(port, () => {
-  prisma.$connect();
   return console.log(`Server is listening on ${port}`);
 });

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.7",
     "@types/react-icons": "^3.0.0",
@@ -30,6 +31,7 @@
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
     "framer-motion": "^10.12.16",
+    "jsonwebtoken": "^9.0.0",
     "next": "13.4.4",
     "next-auth": "^4.22.1",
     "react": "^18.2.0",
