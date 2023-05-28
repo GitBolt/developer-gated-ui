@@ -7,10 +7,16 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import commonStyles from '@/styles/Common.module.css'
 import { FaWallet, FaGithub, FaFileSignature, FaCheck } from 'react-icons/fa';
 import { NextPage } from 'next'
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useState } from 'react'
 import base58 from 'bs58'
+import dynamic from 'next/dynamic';
+
+const WalletMultiButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(module => module.WalletMultiButton), {
+  ssr: false
+});
+
+
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 
@@ -31,12 +37,17 @@ const Start: NextPage = () => {
 
   const sendReq = async () => {
     if (!session || !session.user || !sig) return
+
+    const sendData = {
+      signature: base58.encode(sig),
+      publicKey: publicKey?.toBase58(),
+      // @ts-ignore
+      github: session?.user.username
+    }
+    console.log(sendData)
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/verify", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ signature: base58.encode(sig), publicKey, github: session?.user.name })
+      body: JSON.stringify(sendData)
     })
 
     const data = await res.json()
@@ -152,6 +163,7 @@ const Start: NextPage = () => {
 
             <Button
               h="4.5rem"
+              isDisabled={!publicKey}
               _focus={{ transform: "scale(0.9)" }}
               w="25rem"
               fontSize="2.2rem"
@@ -190,7 +202,7 @@ const Start: NextPage = () => {
             _focus={{ transform: "scale(0.9)" }}
             w="25rem"
             fontSize="2.2rem"
-            disabled={!publicKey || !session || !session.user}
+            isDisabled={!publicKey || !session || !session.user}
             fontWeight={600}
             borderRadius="1.5rem"
             alignSelf="start"
