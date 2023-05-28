@@ -1,25 +1,23 @@
+# docker-compose.yml
 version: '3.8'
 services:
+  db:
+    restart: always
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "bolt"
+      POSTGRES_DB: "prisma_db"
+
   backend:
-    container_name: backend
     restart: always
     build: .
     ports:
       - "8000:8000"
-    depends_on:
-      - db
-    volumes:
-    - .:/usr/src/app
     environment:
-      DATABASE_URL: "postgresql://postgres:bolt@localhost:5432/prisma_db"
-
-  db:
-    container_name: postgres
-    image: postgres
-    ports:
-      - '5432:5432'
-    volumes:
-      - data:/data/db
+      DATABASE_URL: "postgresql://postgres:bolt@db:5432/prisma_db"
 
 volumes: 
- data: {}
+  data: {}
