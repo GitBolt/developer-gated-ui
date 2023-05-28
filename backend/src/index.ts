@@ -17,7 +17,8 @@ app.get('/', (req: Request, res: Response) => {
   return res.send('gm');
 });
 app.post('/verify', verifyUser);
-app.post('/upload', uploadGithubUsername);
+
+// app.post('/upload', uploadGithubUsername);
 
 app.listen(port, () => {
   prisma.$connect();
