@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  backend:
+    container_name: backend
+    restart: always
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+    - .:/usr/src/app
+    environment:
+      DATABASE_URL: "postgresql://postgres:bolt@localhost:5432/prisma_db"
+
+  db:
+    container_name: postgres
+    image: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - data:/data/db
+
+volumes: 
+ data: {}

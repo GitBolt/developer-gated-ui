@@ -4,15 +4,18 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node ./dist/index.js",
+    "dev": "nodemon -L -e ts --exec \"yarn run build && yarn start\"",
+    "build": "tsc"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.27.0",
     "@prisma/client": "^4.14.1",
+    "@types/pg": "^8.10.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "zod": "^3.21.4"
   },
