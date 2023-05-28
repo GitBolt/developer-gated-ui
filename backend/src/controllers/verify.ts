@@ -5,14 +5,27 @@ import { checkUserGh } from '../utils/checkUserGh';
 
 
 export const verifyUser = async (req: Request, res: Response) => {
-  const { signature, github, publicKey } = req.body;
+  const { signature, publicKey } = req.body;
+  const { authorization } = req.headers
+
+
+  if (!authorization) {
+    return res.status(401).json({ message: "Github token missing" })
+  }
 
   if (!validatePubkey(publicKey)) {
     return res.status(400).json({ message: 'Invalid public key' });
   }
 
   try {
-    const check = checkUserGh(github)
+    const ghRes = await fetch("https://api.github.com/user", {
+      headers: {
+        "Authorization": "Bearer " + authorization
+      }
+    })
+    const github = await ghRes.json()
+    const username = github.login
+    const check = checkUserGh(username)
     if (!check) {
       return res
         .status(400)
@@ -21,16 +34,16 @@ export const verifyUser = async (req: Request, res: Response) => {
 
     const user = await prisma.user.findFirst({
       where: {
-        github
+        github: username
       }
     })
     if (user?.signature && user.wallet) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(409).json({ message: 'User already exists' });
     }
 
     await prisma.user.create({
       data: {
-        github,
+        github: username,
         signature: signature,
         wallet: publicKey,
       },

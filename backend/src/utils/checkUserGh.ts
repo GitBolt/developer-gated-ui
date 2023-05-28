@@ -1,12 +1,11 @@
 import { Data } from "./github"
 
+const githubMap = new Map();
+Data.forEach(obj => {
+  const githubHandle = obj.Github_handle;
+  githubMap.set(githubHandle, obj);
+});
+
 export const checkUserGh = (username: string) => {
-    let flag = false
-    Data.forEach((item) => {
-        if (item.Github_handle == username) {
-            flag = true;
-            return
-        }
-    })
-    return flag
+    return githubMap.get(username);
 }

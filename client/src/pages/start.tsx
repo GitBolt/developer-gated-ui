@@ -41,14 +41,14 @@ const Start: NextPage = () => {
     const sendData = {
       signature: base58.encode(signature),
       publicKey: publicKey?.toBase58(),
-      // @ts-ignore
-      github: session?.user.username
     }
     console.log(sendData)
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/verify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // @ts-ignore
+        "Authorization": session.access_token,
       },
       body: JSON.stringify(sendData)
     })
@@ -56,7 +56,11 @@ const Start: NextPage = () => {
     if (res.ok) {
       router.push("/success")
     } else {
-      router.push("/error")
+      if (res.status == 409) {
+        router.push("already")
+      } else {
+        router.push("/error")
+      }
     }
 
   }

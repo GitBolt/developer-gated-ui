@@ -3,14 +3,20 @@
 import { DefaultHead } from '@/components/DefaultHead'
 import { Navbar } from '@/components/Navbar'
 import { Grid, Button, Flex, Text, Divider, Box, Icon } from '@chakra-ui/react'
+import { useSession, signIn, signOut } from "next-auth/react"
 import commonStyles from '@/styles/Common.module.css'
+import { FaWallet, FaGithub, FaFileSignature, FaCheck } from 'react-icons/fa';
 import { NextPage } from 'next'
-import { getSession } from 'next-auth/react'
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { useState } from 'react'
+import base58 from 'bs58'
+import { CheckIcon } from '@chakra-ui/icons'
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 
 
-const Error: NextPage = () => {
+const Success: NextPage = () => {
 
   return (
     <>
@@ -34,40 +40,20 @@ const Error: NextPage = () => {
         </Box>
 
         <Flex mt="5rem" w="100%" flexFlow="column" align="center" justify="center">
-          <Box h="30rem" w="30rem">
-            <img src="/info.png" height="100%" width="100%" alt="info" />
-          </Box>
+
+          <CheckIcon h="30rem" w="30rem" color="green" />
 
 
           <Text textAlign="start" w="80%" mt="5rem" zIndex={10} className={commonStyles.gradientText} fontSize='7rem' fontWeight={700}>
-            We Are Sorry To Inform You
+            You Are Already In!
           </Text>
 
           <Text maxW="80%" zIndex={10} fontSize="4rem" color="#6C7CA3">
-            You are not in our list of open source Solana contributors. Do not be disappointed however. Keep learning and keep pushing!
+            You have already verified yourself and you are in the list for rewards now!
           </Text>
         </Flex>
       </Grid>
     </>
   )
 }
-
-export const getServerSideProps = async (context: any) => {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/'
-      }
-    }
-  }
-  return {
-    props: {
-      session
-    }
-  }
-}
-
-export default Error
-
+export default Success
