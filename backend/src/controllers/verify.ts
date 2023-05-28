@@ -4,6 +4,9 @@ import { prisma } from '../utils';
 import { validatePubkey } from '../utils/validatePubkey';
 export const verifyUser = async (req: Request, res: Response) => {
   const { signature, github, publicKey } = req.body;
+
+  console.log(req.body);
+
   if (!validatePubkey(publicKey)) {
     return res.status(400).json({ message: 'Invalid public key' });
   }
