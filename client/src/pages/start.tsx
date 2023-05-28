@@ -47,6 +47,9 @@ const Start: NextPage = () => {
     console.log(sendData)
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/verify", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(sendData)
     })
 
@@ -112,41 +115,6 @@ const Start: NextPage = () => {
 
           <Divider borderColor="#27274A" />
 
-          <Text
-            color="#7C89FF"
-            fontSize="2.4rem"
-            opacity={publicKey ? "0.5" : "1"}
-            fontWeight={700}
-            alignSelf="start"
-          >Authorize Wallet</Text>
-
-          <Text color="#4B4B67" fontSize="2rem">
-            Connect wallet is required to verify and register your public key
-          </Text>
-
-          <Flex justify="space-between" align="center" w="100%">
-            <WalletMultiButton
-              style={{
-                height: "4.5rem",
-                opacity: publicKey ? "0.5" : "1",
-                width: "25rem",
-                fontWeight: 600,
-                borderRadius: "1.5rem",
-                alignSelf: "start",
-                fontSize: "2.2rem",
-                background: "linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
-              }}
-            >
-              {publicKey ? null : <Icon as={FaWallet} transform="translate(-0.5rem, 0)" />}
-              {publicKey ? truncatedPublicKey(publicKey.toBase58()) : 'Connect Wallet'}
-            </WalletMultiButton>
-
-            <Box>
-              {publicKey ? <Icon as={FaCheck} color="green" /> : null}
-            </Box>
-          </Flex>
-
-          <Divider mt="2rem" borderColor="#27274A" />
 
           <Text
             color="#7C89FF"
@@ -165,7 +133,6 @@ const Start: NextPage = () => {
 
             <Button
               h="4.5rem"
-              isDisabled={!publicKey}
               _focus={{ transform: "scale(0.9)" }}
               w="25rem"
               fontSize="2.2rem"
@@ -183,6 +150,42 @@ const Start: NextPage = () => {
 
             <Box>
               {session && session.user ? <Icon as={FaCheck} color="green" /> : null}
+            </Box>
+          </Flex>
+          <Divider mt="2rem" borderColor="#27274A" />
+
+          <Text
+            color="#7C89FF"
+            fontSize="2.4rem"
+            opacity={publicKey ? "0.5" : "1"}
+            fontWeight={700}
+            alignSelf="start"
+          >Authorize Wallet</Text>
+
+          <Text color="#4B4B67" fontSize="2rem">
+            Connect wallet is required to verify and register your public key
+          </Text>
+
+          <Flex justify="space-between" align="center" w="100%">
+            <WalletMultiButton
+              disabled={!session || !session.user}
+              style={{
+                height: "4.5rem",
+                opacity: (!session || !session.user) ? "0.6" : publicKey ? "0.5" : "1",
+                width: "25rem",
+                fontWeight: 600,
+                borderRadius: "1.5rem",
+                alignSelf: "start",
+                fontSize: "2.2rem",
+                background: "linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
+              }}
+            >
+              {publicKey ? null : <Icon as={FaWallet} transform="translate(-0.5rem, 0)" />}
+              {publicKey ? truncatedPublicKey(publicKey.toBase58()) : 'Connect Wallet'}
+            </WalletMultiButton>
+
+            <Box>
+              {publicKey ? <Icon as={FaCheck} color="green" /> : null}
             </Box>
           </Flex>
 

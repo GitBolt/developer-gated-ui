@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import { verifyUser } from './controllers';
 import { prisma } from './utils';
 import helmet from 'helmet';
-import { uploadGithubUsername } from './controllers/upload';
+
 dotenv.config();
 
 const app = express();
@@ -32,7 +32,6 @@ app.get('/', (req: Request, res: Response) => {
 });
 app.post('/verify', verifyUser);
 
-// app.post('/upload', uploadGithubUsername);
 
 app.listen(port, () => {
   prisma.$connect();
