@@ -38,18 +38,20 @@ const Success: NextPage = () => {
         >
         </Box>
 
-        <Flex mt="4rem" w="100%" flexFlow="column" align="center" justify="center">
+        <Flex mt="5rem" w="100%" flexFlow="column" align="center" justify="center">
           <Box h="30rem" w="30rem">
             <img src="/yay.png" height="100%" width="100%" alt="yay" />
           </Box>
 
 
-          <Text textAlign="start" w="80%" mt="3rem" zIndex={10} className={commonStyles.gradientText} fontSize='7rem' fontWeight={700}>
+          <Text textAlign="start" w="80%" mt="5rem" zIndex={10} className={commonStyles.gradientText} fontSize='7rem' fontWeight={700}>
             You Are Good To Go!
           </Text>
 
           <Text maxW="80%" zIndex={10} fontSize="4rem" color="#6C7CA3">
-            You are now registered for receiving rewards for your open source contributions. Thanks for pushing projects and ecosystem forward!If you have any questions, DM @jacobvcreech
+            You are now registered for receiving rewards for your open source contributions. Thanks for pushing projects and ecosystem forward! 
+            If you have any questions, DM
+            <a href="https://twitter.com/jacobvcreech" style={{ color: "#009fff" }} target="_blank"> @jacobvcreech</a>
           </Text>
         </Flex>
       </Grid>

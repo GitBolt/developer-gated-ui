@@ -11,6 +11,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { useState } from 'react'
 import base58 from 'bs58'
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router'
 
 const WalletMultiButton = dynamic(() => import('@solana/wallet-adapter-react-ui').then(module => module.WalletMultiButton), {
   ssr: false
@@ -32,14 +33,13 @@ const Start: NextPage = () => {
   const { data: session } = useSession()
   console.log(session)
   const { publicKey, signMessage } = useWallet()
-  const [sig, setSig] = useState<Uint8Array>()
+  const router = useRouter()
 
-
-  const sendReq = async () => {
-    if (!session || !session.user || !sig) return
+  const sendReq = async (signature: Uint8Array) => {
+    if (!session || !session.user || !signature) return
 
     const sendData = {
-      signature: base58.encode(sig),
+      signature: base58.encode(signature),
       publicKey: publicKey?.toBase58(),
       // @ts-ignore
       github: session?.user.username
@@ -50,18 +50,20 @@ const Start: NextPage = () => {
       body: JSON.stringify(sendData)
     })
 
-    const data = await res.json()
-    console.log(data)
+    if (res.ok) {
+      router.push("/success")
+    } else {
+      router.push("/error")
+    }
+
   }
 
   const createSignature = async () => {
     if (!signMessage) return
     const message = new TextEncoder().encode(`Signing this message for verification: ${+new Date()}`);
     const signature = await signMessage(message)
-    setSig(signature)
-    await sendReq()
+    await sendReq(signature)
   }
-
 
 
   return (

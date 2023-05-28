@@ -16,11 +16,7 @@ export const Navbar = () => {
       borderColor="#23232d"
     >
 
-      <a href="https://github.com/GitBolt/developer-gated-ui" target="_blank">
-        Contribute
-      </a>
-
-      <a href="https://github.com/GitBolt/developer-gated-ui" target="_blank">
+      <a href="https://github.com/solana-foundation/solana-developer-data/blob/main/crawled_repos/solana_devs.csv" target="_blank">
         Developer List
       </a>
       <a href="https://github.com/GitBolt/developer-gated-ui" target="_blank">

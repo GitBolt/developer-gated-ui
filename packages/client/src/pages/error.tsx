@@ -32,13 +32,13 @@ const Error: NextPage = () => {
         >
         </Box>
 
-        <Flex mt="4rem" w="100%" flexFlow="column" align="center" justify="center">
+        <Flex mt="5rem" w="100%" flexFlow="column" align="center" justify="center">
           <Box h="30rem" w="30rem">
-            <img src="/error.png" height="100%" width="100%" alt="yay" />
+            <img src="/info.png" height="100%" width="100%" alt="info" />
           </Box>
 
 
-          <Text textAlign="start" w="80%" mt="3rem" zIndex={10} className={commonStyles.gradientText} fontSize='7rem' fontWeight={700}>
+          <Text textAlign="start" w="80%" mt="5rem" zIndex={10} className={commonStyles.gradientText} fontSize='7rem' fontWeight={700}>
             We Are Sorry To Inform You
           </Text>
 
