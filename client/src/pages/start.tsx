@@ -149,7 +149,7 @@ const Start: NextPage = () => {
               _hover={{ bg: 'linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)' }}
               bg="linear-gradient(93.65deg, #2546BB 3.63%, #2E22B9 98.31%)"
             >
-              Connect GitHub
+              {session && session.user ? 'Logout GitHub' : 'Connect GitHub'}
             </Button>
 
             <Box>

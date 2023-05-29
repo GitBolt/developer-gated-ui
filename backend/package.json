@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node ./dist/index.js",
     "dev": "nodemon src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "start:migrate": "prisma db push && yarn start"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.27.0",

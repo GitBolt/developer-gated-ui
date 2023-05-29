@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:16.13.1-alpine3.14
+FROM node:20
 
 WORKDIR /app
 
@@ -15,5 +15,4 @@ RUN yarn build
 
 EXPOSE 8000
 
-RUN npx prisma generate
-CMD yarn start
+CMD yarn start:migrate

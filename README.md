@@ -7,6 +7,11 @@
 2. Create a `.env` file with `DATABASE_URL` value having your Postgresql connection URI
 3. Enter `yarn install && yarn dev`
 
+*OR*
+
+You can just run `docker-compose up --build` to start it. Make sure to change the database values in [docker-compose.yml](/backend//docker-compose.yml) file.
+
+
 ### Client
 1. Head over to "client" directory. Type `cd client/`
 2. Head over to [Github oAuth Apps](https://github.com/settings/developers) and create a new OAuth app. Save your secret and client ID

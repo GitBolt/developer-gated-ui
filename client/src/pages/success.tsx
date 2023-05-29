@@ -23,9 +23,10 @@ const Success: NextPage = () => {
       >
         <Box
           w="70rem"
+          top="12rem"
+          left="10rem"
           h="70rem"
-          bg="radial-gradient(31.43% 31.43% at 33.32% 55.26%, rgba(38, 38, 94, 0.42) 33.11%, rgba(30, 52, 130, 0.29) 100%, rgba(20, 27, 53, 0.5) 100%)"
-          filter="brightness(120%) blur(100px)"
+          className={commonStyles.glow}
         >
         </Box>
 
@@ -33,7 +34,6 @@ const Success: NextPage = () => {
           <Box h="30rem" w="30rem">
             <img src="/yay.png" height="100%" width="100%" alt="yay" />
           </Box>
-
 
           <Text textAlign="start" w="80%" mt="5rem" zIndex={10} className={commonStyles.gradientText} fontSize='7rem' fontWeight={700}>
             You Are Good To Go!
