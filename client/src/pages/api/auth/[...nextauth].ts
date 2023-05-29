@@ -33,15 +33,6 @@ export const authOptions = {
         url: "https://github.com/login/oauth/authorize",
         params: { scope: "read:user" },
       },
-      profile: (profile, tokens) => {
-        const username = profile.login;
-        console.log(username);
-        return {
-          id: profile.id.toString(),
-          name: profile.name,
-          username: username || "hey",
-        };
-      },
     }),
   ],
 };

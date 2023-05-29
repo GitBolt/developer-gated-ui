@@ -1,12 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
+// Next
+import { NextPage } from 'next'
 
+// Components
 import { DefaultHead } from '@/components/DefaultHead'
 import { Navbar } from '@/components/Navbar'
 import { Grid, Flex, Text, Box } from '@chakra-ui/react'
-import commonStyles from '@/styles/Common.module.css'
-import { NextPage } from 'next'
-import { getSession } from 'next-auth/react'
 import { CheckIcon } from '@chakra-ui/icons'
+
+// Others
+import commonStyles from '@/styles/Common.module.css'
+import { getSession } from 'next-auth/react'
 
 
 

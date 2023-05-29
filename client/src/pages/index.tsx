@@ -1,11 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
+// Next
+import { useRouter } from 'next/router'
 
+// Components
 import { DefaultHead } from '@/components/DefaultHead'
 import { Navbar } from '@/components/Navbar'
 import { Box, Grid, Text, Flex, Button } from '@chakra-ui/react'
-import commonStyles from '@/styles/Common.module.css'
 import { ChevronRightIcon } from '@chakra-ui/icons'
-import { useRouter } from 'next/router'
+
+// Others
+import commonStyles from '@/styles/Common.module.css'
+
 
 export default function Home() {
 

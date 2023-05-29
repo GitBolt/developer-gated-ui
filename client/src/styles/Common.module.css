@@ -24,3 +24,19 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+
+.formBox {
+    margin-bottom: 4rem;
+    border: 1px solid #27274A;
+    gap: 1.5rem;
+    border-radius: 2rem;
+    margin-top: 5rem;
+    width: 65rem;
+    padding: 0 5rem;
+    height: 75rem;
+    flex-flow: column;
+    align-items: center;
+    font-size: 2rem;
+    color: white;
+    background: linear-gradient(134.22deg, #13131D 51.58%, #1D1D30 111.53%);
+}
